@@ -2,5 +2,6 @@ backend/node_modules/
 backend/.env
 backend/firebase-service-account.json
 backend/data/*.json
+render-env-values.local.txt
 .DS_Store
 Thumbs.db
