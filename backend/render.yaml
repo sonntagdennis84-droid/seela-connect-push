@@ -2,7 +2,7 @@ services:
   - type: web
     name: seela-connect-push-backend
     runtime: docker
-    plan: starter
+    plan: free
     healthCheckPath: /health
     envVars:
       - key: PORT
