@@ -2,7 +2,7 @@ import express from "express";
 import cron from "node-cron";
 import { checkSeela } from "./checker.js";
 import { config, requireConfig } from "./config.js";
-import { sendPush } from "./push.js";
+import { checkPushConfig, sendPush } from "./push.js";
 import { addToken, readState, readTokens } from "./store.js";
 
 requireConfig();
@@ -60,6 +60,14 @@ app.post("/push-test", async (req, res, next) => {
 app.get("/devices/count", async (req, res, next) => {
   try {
     res.json({ count: (await readTokens()).length });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/push-config", (req, res, next) => {
+  try {
+    res.json(checkPushConfig());
   } catch (error) {
     next(error);
   }

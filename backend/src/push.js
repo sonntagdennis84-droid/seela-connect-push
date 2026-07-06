@@ -20,16 +20,34 @@ export function initPush() {
 
 function readServiceAccount() {
   if (config.firebaseServiceAccountJson) {
-    return JSON.parse(config.firebaseServiceAccountJson);
+    return parseJson(config.firebaseServiceAccountJson, "FIREBASE_SERVICE_ACCOUNT_JSON");
   }
 
   if (config.firebaseServiceAccountBase64) {
     const json = Buffer.from(config.firebaseServiceAccountBase64, "base64").toString("utf8");
-    return JSON.parse(json);
+    return parseJson(json, "FIREBASE_SERVICE_ACCOUNT_BASE64");
   }
 
   if (!fs.existsSync(config.firebaseServiceAccount)) return null;
-  return JSON.parse(fs.readFileSync(config.firebaseServiceAccount, "utf8"));
+  return parseJson(fs.readFileSync(config.firebaseServiceAccount, "utf8"), config.firebaseServiceAccount);
+}
+
+export function checkPushConfig() {
+  const serviceAccount = readServiceAccount();
+  return {
+    ok: !!serviceAccount?.project_id && !!serviceAccount?.client_email && !!serviceAccount?.private_key,
+    projectId: serviceAccount?.project_id || null,
+    hasClientEmail: !!serviceAccount?.client_email,
+    hasPrivateKey: !!serviceAccount?.private_key
+  };
+}
+
+function parseJson(value, source) {
+  try {
+    return JSON.parse(value);
+  } catch (error) {
+    throw new Error(`Firebase service account could not be parsed from ${source}. Please paste the complete value again.`);
+  }
 }
 
 export async function sendPush({ title, body, data = {} }) {
