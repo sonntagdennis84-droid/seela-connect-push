@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Seela Connect</string>
+    <string name="seela_url">https://www.seela-connect.de/menu.php</string>
+    <string name="backend_url">https://YOUR-BACKEND-DOMAIN.example.com</string>
+</resources>

@@ -1,0 +1,24 @@
+plugins {
+    id "com.android.application"
+    id "com.google.gms.google-services"
+}
+
+android {
+    namespace "de.seela.connectpush"
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "de.seela.connectpush"
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName "0.1.0"
+    }
+}
+
+dependencies {
+    implementation platform("com.google.firebase:firebase-bom:33.7.0")
+    implementation "com.google.firebase:firebase-messaging"
+    implementation "androidx.core:core:1.15.0"
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+}

@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: seela-connect-push-backend
+    runtime: docker
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 8787
+      - key: SEELA_BASE_URL
+        value: https://www.seela-connect.de
+      - key: CHECK_CRON
+        value: "*/5 * * * *"
+      - key: SEND_BASELINE_PUSH
+        value: "false"
+      - key: SEELA_USERNAME
+        sync: false
+      - key: SEELA_PASSWORD
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT_BASE64
+        sync: false
